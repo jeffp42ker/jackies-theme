@@ -135,29 +135,29 @@
                 "max-w-screen-lg"
                 "max-w-screen-sm")]
     (base-html
-      opts
-      (navbar (assoc opts :navbar/max-w width))
-      [:div.mx-auto.p-3.text-lg.flex-grow.w-full
-       {:class width}
-       [:div.h-2]
-       [:h1.font-bold.leading-tight.text-gray-900
-        {:style {:font-size "2.75rem"}}
-        (:post/title post)]
-       [:div.h-3]
-       (byline opts)
-       [:div.h-5]
-       [:div.post-content (raw-string (:post/html post))]
-       [:div.h-5]
-       (when-some [forum-url (custom-key opts :com.platypub/discourse-url)]
-         (list
-           [:div.text-xl.font-bold.mb-3 "Comments"]
-           (embed-discourse {:forum-url forum-url
-                             :page-url (str (:site/url site) path)})
-           [:div.h-5]))]
-      (subscribe-form opts)
-      [:div.bg-primary
-       [:div.sm:text-center.text-sm.leading-snug.w-full.px-3.pb-3.text-white.opacity-75
-        (recaptcha-disclosure {:link-class "underline"})]])))
+     opts
+     (navbar (assoc opts :navbar/max-w width))
+     [:div.mx-auto.p-3.text-lg.flex-grow.w-full
+      {:class width}
+      [:div.h-2]
+      [:h1.font-bold.leading-tight.text-green-700
+       {:style {:font-size "1.75rem"}}
+       (:post/title post)]
+      [:div.h-5]
+      [:div.post-content (raw-string (:post/html post))]
+      [:div.h-3]
+      [:div.flex [:div.flex-grow ][:div.text-align-right.flex-grow-0 (byline opts)]]
+      [:div.h-5]
+      (when-some [forum-url (custom-key opts :com.platypub/discourse-url)]
+        (list
+         [:div.text-xl.font-bold.mb-3 "Comments"]
+         (embed-discourse {:forum-url forum-url
+                           :page-url (str (:site/url site) path)})
+         [:div.h-5]))]
+     (subscribe-form opts)
+     [:div.bg-primary
+      [:div.sm:text-center.text-sm.leading-snug.w-full.px-3.pb-3.text-white.opacity-75
+       (recaptcha-disclosure {:link-class "underline"})]])))
 
 (defn render-page [{:keys [site post account] :as opts}]
   (base-html
@@ -178,9 +178,9 @@
         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
-         [:div.text-sm.text-gray-800 (format-date "d MMM yyyy" published-at)]
-         [:div.text-xl.font-bold title]
-         [:div description]])]
+         [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
+         [:div.text-xl.font-bold.text-green-700 title]
+         [:div.text-green-900 description]])]
      [:div.flex-grow]]
     (subscribe-form opts)
     [:div.bg-primary
@@ -206,9 +206,9 @@
         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
-         [:div.text-sm.text-gray-800 (format-date "d MMM yyyy" published-at)]
-         [:div.text-xl.font-bold title]
-         [:div description]])]
+         [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
+         [:div.text-xl.font-bold.text-green-700 title]
+         [:div.text-green-900 description]])]
      [:div.flex-grow]
      [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
       (recaptcha-disclosure {:link-class "underline"})]

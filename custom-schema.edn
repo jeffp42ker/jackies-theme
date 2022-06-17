@@ -1,11 +1,11 @@
 [{:label "Primary color"
-  :default "#343a40"
+  :default "#44403c"
   :key :com.platypub/primary-color}
  {:label "Accent color"
   :default "#009b50"
   :key :com.platypub/accent-color}
  {:label "Tertiary color"
-  :default "#e5e7eb"
+  :default "#e5e5e5"
   :key :com.platypub/tertiary-color}
  {:label "Logo image URL"
   :description "Suggested dimensions: 320x60 px"

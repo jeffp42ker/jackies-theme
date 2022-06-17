@@ -74,28 +74,28 @@
     [:meta {:name "viewport" :content "width=device-width,initial-scale=1"}]]
    [:body
     (centered
-      [:div {:style {:margin "5px 0"}}
-       [:a {:href (:site/url site)} (:list/title lst)]]
-      [:a {:href (post-url opts)} [:h1.title {:style {:font-size "2.75rem"
-                                                      :margin "0"
-                                                      :color "black"}}
-                                   (:post/title post)]]
-      (space 5)
-      (byline opts)
-      (space 10)
-      (raw-string (:post/html post))
-      (space 15)
-      (when (custom-key opts :com.platypub/discourse-url)
-        (list
-          (button {:bg-color (custom-key opts :com.platypub/primary-color)
-                   :href (comments-url opts)
-                   :label "View comments"})
-          (space 25)))
-      [:hr]
-      (space 8)
-      [:div {:style {:font-size "85%"}}
-       (:list/mailing-address lst) ". "
-       [:a {:href "%mailing_list_unsubscribe_url%"} "Unsubscribe."]])]])
+     [:div {:style {:margin "5px 0"}}
+      [:a {:href (:site/url site)} (:list/title lst)]]
+     [:a {:href (post-url opts)} [:h1.title {:style {:font-size "1.25rem"
+                                                     :margin "0"
+                                                     :color "green"}}
+                                  (:post/title post)]]
+     (space 10)
+     (raw-string (:post/html post))
+     (space 5)
+     (byline opts)
+     (space 15)
+     (when (custom-key opts :com.platypub/discourse-url)
+       (list
+        (button {:bg-color (custom-key opts :com.platypub/primary-color)
+                 :href (comments-url opts)
+                 :label "View comments"})
+        (space 25)))
+     [:hr]
+     (space 8)
+     [:div {:style {:font-size "85%"}}
+      (:list/mailing-address lst) ". "
+      [:a {:href "%mailing_list_unsubscribe_url%"} "Unsubscribe."]])]])
 
 (defn main [opts]
   {:html (str (hiccup/html (render opts)))})

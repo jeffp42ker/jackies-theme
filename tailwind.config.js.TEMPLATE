@@ -10,6 +10,9 @@ module.exports = {
         'tertiary': '{{tertiary}}',
       },
     },
+    fontFamily: {
+        'sans': ['Open Sans'],
+    },
   },
   plugins: [
     require('@tailwindcss/forms'),
