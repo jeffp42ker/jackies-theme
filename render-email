@@ -1,0 +1,103 @@
+#!/usr/bin/env bb
+;; vim: ft=clojure
+(load-file "common.bb")
+
+(defn centered [& body]
+  [:table
+   {:border "0",
+    :cellpadding "0",
+    :align "center",
+    :cellspacing "0"
+    :style {:width "100%"
+            :max-width "550px"}}
+   [:tr
+    [:td
+     [:table
+      {:width "100%", :cellspacing "", :cellpadding "0", :border "0"}
+      [:tr
+       [:td body]]]]]])
+
+(defn post-url [{:keys [post site] :as opts}]
+  (str (:site/url site) "/p/" (:post/slug post) "/"))
+
+(defn comments-url [opts]
+  (str (post-url opts) "#discourse-comments"))
+
+(defn byline [{:keys [post site] :as opts}]
+  (let [author (author opts)]
+    [:table
+     {:border "0"
+      :cellpadding "0"
+      :cellspacing "0"}
+     [:tr
+      [:td [:a {:href (:url author)}
+            [:img {:src (cached-img-url {:url (:image author)
+                                         :w 100 :h 100})
+                   :width "50px"
+                   :height "50px"
+                   :style {:border-radius "50%"
+                           :width "50px"
+                           :height "50px"
+                           :margin-right "10px"}}]]]
+      [:td {:style {:font-size "90%"}}
+       [:div (:name author)]
+       [:div
+        (format-date "d MMM yyyy" (:post/published-at post))
+        (when (custom-key opts :com.platypub/discourse-url)
+          (list
+            interpunct
+            [:a {:href (comments-url opts)} "comments"]))]]]]))
+
+(defn space [px]
+  [:div {:style (str "height:" px "px")}])
+
+(defn button [{:keys [bg-color href label]}]
+  [:table {:width "100%", :cellspacing "", :cellpadding "0", :border "0"}
+   [:tr
+    [:td
+     {:align "center"}
+     [:a {:href href
+          :style {:background-color bg-color
+                  :color "white"
+                  :padding "10px 20px"
+                  :border-radius "3px"
+                  :display "inline-block"
+                  :text-align "center"}}
+      label]]]])
+
+(defn render [{:keys [post site] lst :list :as opts}]
+  [:html
+   [:head
+    [:title (:post/title post)]
+    [:style (raw-string (slurp "email.css"))]
+    [:meta {:http-equiv "Content-Type" :content "text/html; charset=utf-8"}]
+    [:meta {:name "viewport" :content "width=device-width,initial-scale=1"}]]
+   [:body
+    (centered
+      [:div {:style {:margin "5px 0"}}
+       [:a {:href (:site/url site)} (:list/title lst)]]
+      [:a {:href (post-url opts)} [:h1.title {:style {:font-size "2.75rem"
+                                                      :margin "0"
+                                                      :color "black"}}
+                                   (:post/title post)]]
+      (space 5)
+      (byline opts)
+      (space 10)
+      (raw-string (:post/html post))
+      (space 15)
+      (when (custom-key opts :com.platypub/discourse-url)
+        (list
+          (button {:bg-color (custom-key opts :com.platypub/primary-color)
+                   :href (comments-url opts)
+                   :label "View comments"})
+          (space 25)))
+      [:hr]
+      (space 8)
+      [:div {:style {:font-size "85%"}}
+       (:list/mailing-address lst) ". "
+       [:a {:href "%mailing_list_unsubscribe_url%"} "Unsubscribe."]])]])
+
+(defn main [opts]
+  {:html (str (hiccup/html (render opts)))})
+
+(main (derive-opts *input*))
