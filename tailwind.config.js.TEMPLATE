@@ -1,0 +1,17 @@
+module.exports = {
+  content: [
+    'public/**/*.html',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'primary': '{{primary}}',
+        'accent': '{{accent}}',
+        'tertiary': '{{tertiary}}',
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+  ],
+}
