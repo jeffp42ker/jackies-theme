@@ -88,6 +88,8 @@
               :title (str "Feed for " (:site/title site)),
               :type "application/atom+xml",
               :rel "alternate"}]
+      [:link {:rel "icon" :type "image/png" :sizes "64x64" 
+              :href "https://leaplane.nyc3.digitaloceanspaces.com/2098f92c-b2a7-4a09-9096-04a4f53ef251"}]
       [:link {:rel "stylesheet" :href "/css/main.css"}]
       [:link {:rel "preconnect" :href "https://fonts.googleapis.com"}]
       [:link {:rel "preconnect" :href "https://fonts.gstatic.com" :crossorigin :true}]
