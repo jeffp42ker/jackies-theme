@@ -143,6 +143,10 @@
       [:h1.font-bold.leading-tight.text-green-700
        {:style {:font-size "1.75rem"}}
        (:post/title post)]
+      [:div.h-3]
+      [:h2.leading-tight.text-green-700
+       {:style {:font-size "1.0rem"}}
+       (:post/description post)]
       [:div.h-5]
       [:div.post-content (raw-string (:post/html post))]
       [:div.h-3]
@@ -180,7 +184,7 @@
           :class "hover:bg-white/50"}
          [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
          [:div.text-xl.font-bold.text-green-700 title]
-         [:div.text-green-900 description]])]
+         [:div.text-green-700 description]])]
      [:div.flex-grow]]
     (subscribe-form opts)
     [:div.bg-primary
@@ -208,7 +212,7 @@
           :class "hover:bg-white/50"}
          [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
          [:div.text-xl.font-bold.text-green-700 title]
-         [:div.text-green-900 description]])]
+         [:div.text-green-700 description]])]
      [:div.flex-grow]
      [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
       (recaptcha-disclosure {:link-class "underline"})]
