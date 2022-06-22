@@ -141,7 +141,7 @@
       {:class width}
       [:div.h-2]
       [:h1.font-bold.leading-tight.text-green-700
-       {:style {:font-size "1.75rem"}}
+       {:style {:font-size "1.5rem"}}
        (:post/title post)]
       [:div.h-3]
       [:h2.leading-tight.text-green-700
@@ -183,7 +183,7 @@
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
          [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
-         [:div.text-xl.font-bold.text-green-700 title]
+         [:div.text-lg.font-bold.text-green-700 title]
          [:div.text-green-700 description]])]
      [:div.flex-grow]]
     (subscribe-form opts)
@@ -211,7 +211,7 @@
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
          [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
-         [:div.text-xl.font-bold.text-green-700 title]
+         [:div.text-lg.font-bold.text-green-700 title]
          [:div.text-green-700 description]])]
      [:div.flex-grow]
      [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
