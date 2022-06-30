@@ -206,7 +206,7 @@
                          tags]} (->> posts
                                      (sort-by #(not ((:post/tags %) "featured")))
                                      (remove #((:post/tags %) "unlisted"))
-                                     (take 5))]
+                                     (take 9))]
         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
