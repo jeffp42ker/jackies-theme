@@ -81,6 +81,10 @@
                                                      :margin "0"
                                                      :color "green"}}
                                   (:post/title post)]]
+     (when-let [s (not-empty (:post/description post))]
+       (list
+        (space 5)
+        (raw-string s)))
      (space 10)
      (raw-string (:post/html post))
      (space 5)
