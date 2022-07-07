@@ -1,4 +1,5 @@
-# Platypub default theme
+# Jackies theme
+A [Platypub](https://github.com/jacobobryant/platypub/tree/master/themes/default) theme, derived from the [default theme](https://github.com/jacobobryant/platypub/tree/master/themes/default) in support of building a community website around a local park. It's at an early stage, like Platypub itself. Significant breaking changes may be expected. Platypub default theme instructions: 
 
 Must have `bb` on path.
 
