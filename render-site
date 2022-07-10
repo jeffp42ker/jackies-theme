@@ -76,7 +76,7 @@
 (defn subscribe-form [{:keys [site account] lst :list}]
   [:div.flex.flex-col.items-center.text-center.px-3.bg-primary.text-white
    [:div.h-20]
-   [:div.font-bold.text-3xl.leading-none
+   [:div.font-bold.tracking-wider.text-3xl.leading-none
     (:list/title lst)]
    [:div.h-4]
    [:div.text-lg (:site/description site)]
