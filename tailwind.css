@@ -41,24 +41,23 @@
   }
 
   .post-content li {
-    @apply mt-2;
+    @apply mt-1;
   }
 
   .post-content h1 {
-    @apply font-bold leading-tight text-gray-900 text-4xl;
+    @apply font-serif font-bold leading-tight text-green-700 text-2xl;
   }
 
   .post-content h2 {
-    @apply font-bold leading-tight text-gray-900 text-3xl mt-5 mb-3;
+    @apply font-serif font-bold leading-tight text-green-700 text-xl mt-5 mb-3;
   }
 
   .post-content h3 {
-    @apply font-bold leading-tight text-gray-900 text-2xl mt-5 mb-3;
+    @apply font-serif font-bold leading-tight text-green-700 text-lg mt-5 mb-3;
   }
-
   .post-content hr {
     @apply my-8 border-neutral-400;
-  }  
+  }
 }
 
 .grecaptcha-badge { visibility: hidden; }
