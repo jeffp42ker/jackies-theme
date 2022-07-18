@@ -180,9 +180,9 @@
         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
-         [:div.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
-         [:div.text-lg.font-bold.text-green-700 title]
-         [:div.text-green-700 description]])]
+         [:div.font-serif.leading-tight.text-lg.font-bold.text-green-700 title]
+         [:div.mt-1.font-sans.leading-tight.text-sm.text-green-700 description]
+         [:div.flex [:div.flex-grow][:div.text-align-right.mt-1.font-sans.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]]])]
      [:div.flex-grow]]
     (subscribe-form opts)
     [:div.bg-primary
@@ -208,9 +208,9 @@
         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
          {:href (str "/p/" slug "/")
           :class "hover:bg-white/50"}
-         [:div.mb-1.font-sans.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]
          [:div.font-serif.leading-tight.text-lg.font-bold.text-green-700 title]
-         [:div.mt-1.font-sans.leading-tight.text-green-700 description]])]
+         [:div.mt-1.font-sans.leading-tight.text-sm.text-green-700 description]
+         [:div.flex [:div.flex-grow] [:div.text-align-right.mt-1.font-sans.text-sm.text-gray-400 (format-date "d MMM yyyy" published-at)]]])]
      [:div.flex-grow]
      [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
       (recaptcha-disclosure {:link-class "underline"})]

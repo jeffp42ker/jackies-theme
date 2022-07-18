@@ -11,7 +11,7 @@ module.exports = {
       },
     },
     fontFamily: {
-        'sans': ['Lato', 'sans-serif'],
+        'sans': ['Open Sans', 'sans-serif'],
         'serif': ['Domine', 'serif']
     },
   },

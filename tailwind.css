@@ -41,7 +41,7 @@
   }
 
   .post-content li {
-    @apply mt-1;
+    @apply mt-2 text-base;
   }
 
   .post-content h1 {
@@ -57,6 +57,9 @@
   }
   .post-content hr {
     @apply my-8 border-neutral-400;
+  }
+  .post-content p {
+    @apply text-base
   }
 }
 
