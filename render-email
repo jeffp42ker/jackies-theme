@@ -86,7 +86,7 @@
         (space 5)
         (raw-string s)))
      (space 10)
-     (raw-string (:post/html post))
+     [:div.post-content (raw-string (:post/html post))]
      (space 5)
      (byline opts)
      (space 15)
