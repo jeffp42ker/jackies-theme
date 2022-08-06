@@ -66,9 +66,7 @@
                   :text-align "center"}}
       label]]]])
 
-(defn render [{:keys [post site] lst :list :as opts}]
-  (binding [*out* *err*]
-    (prn (keys post)))
+(defn render [{:keys [post site] lst :list :as opts}] 
   [:html
    [:head
     [:title (:title post)]
