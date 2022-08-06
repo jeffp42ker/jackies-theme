@@ -59,7 +59,11 @@
     @apply my-8 border-neutral-400;
   }
   .post-content p {
-    @apply text-base
+    @apply text-base;
+  }
+
+  .post-content .emailonly {
+    @apply hidden;
   }
 }
 
