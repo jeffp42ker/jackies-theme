@@ -75,7 +75,7 @@
 (defn subscribe-form [{:keys [site account] lst :list}]
   [:div.flex.flex-col.items-center.text-center.px-3.bg-primary.text-white
    [:div.h-20]
-   [:div.font-bold.text-3xl.leading-none
+   [:div.font-serif.text-4xl.leading-none
     (:title lst)]
    [:div.h-4]
    [:div.text-lg (:description site)]
@@ -129,22 +129,26 @@
 (defn post-page [{:keys [site post account base/path] :as opts}]
   (let [width (if ((:tags post) "video")
                 "max-w-screen-lg"
-                "max-w-screen-sm")]
+                "max-w-screen-sm")
+        _ (when-some [forum-url (not-empty (:discourse-url site))] 
+            (prn "forum-url:" forum-url))
+        ]
     (base-html
      opts
      (navbar (assoc opts :navbar/max-w width))
      [:div.mx-auto.p-3.text-lg.flex-grow.w-full
       {:class width}
       [:div.h-2]
-      [:h1.font-bold.leading-tight.text-gray-900
-       {:style {:font-size "2.75rem"}}
+      [:h1.font-serif.font-bold.leading-tight.text-green-700
+       {:style {:font-size "1.5rem"}}
        (:title post)]
       [:div.h-3]
-      (byline opts)
-      [:div.h-5]
       [:div.post-content (raw-string (:html post))]
       [:div.h-5]
-      (when-some [forum-url (:discourse-url site)]
+      [:div.flex [:div.flex-grow]
+       [:div.text-align-right.flex-grow-0 (byline opts)]]
+      [:div.h-5]
+      (when-some [forum-url (not-empty (:discourse-url site))]
         (list
          [:div.text-xl.font-bold.mb-3 "Comments"]
          (embed-discourse {:forum-url forum-url
@@ -173,10 +177,11 @@
            :when (not ((:tags post) "unlisted"))]
        [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
         {:href (str "/p/" (:slug post) "/")
-         :class "hover:bg-white/50"}
-        [:div.text-sm.text-gray-800 (format-date "d MMM yyyy" (:published-at post))]
-        [:div.text-xl.font-bold (:title post)]
-        [:div (:description post)]])]
+         :class "hover:bg-white/50"} 
+        [:div.text-xl.text-green-700.font-serif.font-bold (:title post)]
+        [:div.text-green-700 (:description post)]
+        [:div.flex [:div.flex-grow]
+         [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at post))]]])]
     [:div.flex-grow]]
    (subscribe-form opts)
    [:div.bg-primary
@@ -198,9 +203,10 @@
        [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
         {:href (str "/p/" (:slug post) "/")
          :class "hover:bg-white/50"}
-        [:div.text-sm.text-gray-800 (format-date "d MMM yyyy" (:published-at post))]
-        [:div.text-xl.font-bold (:title post)]
-        [:div (:description post)]])]
+        [:div.text-lg.text-green-700.font-serif.font-bold (:title post)]
+        [:div.text-sm.text-green-700 (:description post)]
+        [:div.flex [:div.flex-grow]
+         [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at post))]]])]
     [:div.flex-grow]
     [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
      (recaptcha-disclosure {:link-class "underline"})]

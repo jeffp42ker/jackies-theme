@@ -4,11 +4,11 @@
           :com.platypub.site/redirects      {:label "Redirects"
                                              :type :textarea}
           :com.platypub.site/primary-color  {:label "Primary color"
-                                             :default "#343a40"}
+                                             :default "#44403c"}
           :com.platypub.site/accent-color   {:label "Accent color"
                                              :default "#009b50"}
           :com.platypub.site/tertiary-color {:label "Tertiary color"
-                                             :default "#e5e7eb"}
+                                             :default "#e5e5e5"}
           :com.platypub.site/logo-image     {:label "Logo image URL"
                                              :description "Suggested dimensions: 320x60 px"}
           :com.platypub.site/logo-url       {:label "Logo destination URL"
@@ -83,7 +83,7 @@
          {:key :pages
           :label "Page"
           :slug "pages"
-          :match [:com.platypub.page/path]
+          :query [:com.platypub.page/path]
           :fields [:com.platypub.post/title
                    :com.platypub.page/path
                    :com.platypub.post/draft
