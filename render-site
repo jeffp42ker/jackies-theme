@@ -129,10 +129,7 @@
 (defn post-page [{:keys [site post account base/path] :as opts}]
   (let [width (if ((:tags post) "video")
                 "max-w-screen-lg"
-                "max-w-screen-sm")
-        _ (when-some [forum-url (not-empty (:discourse-url site))] 
-            (prn "forum-url:" forum-url))
-        ]
+                "max-w-screen-sm")]
     (base-html
      opts
      (navbar (assoc opts :navbar/max-w width))
@@ -142,6 +139,10 @@
       [:h1.font-serif.font-bold.leading-tight.text-green-700
        {:style {:font-size "1.5rem"}}
        (:title post)]
+      [:div.h-3]
+      [:h2.font-sans.leading-tight.text-green-700
+       {:style {:font-size "1.0rem"}}
+       (:description post)]
       [:div.h-3]
       [:div.post-content (raw-string (:html post))]
       [:div.h-5]
@@ -178,8 +179,8 @@
        [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
         {:href (str "/p/" (:slug post) "/")
          :class "hover:bg-white/50"} 
-        [:div.text-xl.text-green-700.font-serif.font-bold (:title post)]
-        [:div.text-green-700 (:description post)]
+        [:div.text-lg.text-green-700.font-serif.font-bold (:title post)]
+        [:div.text-sm.text-green-700 (:description post)]
         [:div.flex [:div.flex-grow]
          [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at post))]]])]
     [:div.flex-grow]]
