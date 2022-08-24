@@ -91,7 +91,7 @@
       [:link {:rel "preconnect" :href "https://fonts.googleapis.com"}]
       [:link {:rel "preconnect" :href "https://fonts.gstatic.com" :crossorigin :true}]
       [:link {:rel "stylesheet" :href "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&family=Domine:wght@400;500;600;700&display=swap"}]
-      [:script {:src "https://unpkg.com/hyperscript.org@0.9.3"}]
+      [:script {:src "https://unpkg.com/hyperscript.org@0.93"}]
       [:script {:src "https://www.google.com/recaptcha/api.js"
                 :async "async"
                 :defer "defer"}]
@@ -166,6 +166,13 @@
        (filter #(.isFile %))
        (run! #(io/copy % (doto (io/file "public" (subs (.getPath %) (count "assets/"))) io/make-parents)))))
 
+(defn events! [{:keys [events] :as opts} render-event]
+  (doseq [event events
+          :let [path (str "/e/" (:slug event) "/")]]
+    (render! path
+             "<!DOCTYPE html>"
+             (render-event (assoc opts :base/path path :event event)))))
+
 (defn posts! [{:keys [posts] :as opts} render-post]
   (doseq [post posts
           :let [path (str "/p/" (:slug post) "/")]]
@@ -191,8 +198,13 @@
               [(keyword (name k)) v]))
        (into {})))
 
-(defn derive-opts [{:keys [site item lists posts pages] :as opts}]
-  (let [posts (->> posts
+(defn derive-opts [{:keys [site item lists events posts pages] :as opts}]
+  (let [events (->> events
+                   (map without-ns)
+                   (remove :draft)
+                   (map #(update % :tags set))
+                   (sort-by :published-at #(compare %2 %1)))
+        posts (->> posts
                    (map without-ns)
                    (remove :draft)
                    (map #(update % :tags set))
@@ -211,6 +223,7 @@
            :post (-> item
                      without-ns
                      (update :tags set))
+           :events events
            :posts posts
            :pages pages
            :list (without-ns (first lists))

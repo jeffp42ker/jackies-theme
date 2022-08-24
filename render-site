@@ -126,6 +126,40 @@
        explanation])]
    [:div.h-20]])
 
+(defn event-page [{:keys [site event account base/path] :as opts}]
+  (let [width (if ((:tags event) "video")
+                "max-w-screen-lg"
+                "max-w-screen-sm")]
+    (base-html
+     opts
+     (navbar (assoc opts :navbar/max-w width))
+     [:div.mx-auto.p-3.text-lg.flex-grow.w-full
+      {:class width}
+      [:div.h-2]
+      [:h1.font-serif.font-bold.leading-tight.text-green-700
+       {:style {:font-size "1.5rem"}}
+       (:title event)]
+      [:div.h-3]
+      [:h2.font-sans.leading-tight.text-green-700
+       {:style {:font-size "1.0rem"}}
+       (:description event)]
+      [:div.h-3]
+      [:div.post-content (raw-string (:html event))]
+      [:div.h-5]
+      [:div.flex [:div.flex-grow]
+       [:div.text-align-right.flex-grow-0 (byline opts)]]
+      [:div.h-5]
+      (when-some [forum-url (not-empty (:discourse-url site))]
+        (list
+         [:div.text-xl.font-bold.mb-3 "Comments"]
+         (embed-discourse {:forum-url forum-url
+                           :page-url (str (:url site) path)})
+         [:div.h-5]))]
+     (subscribe-form opts)
+     [:div.bg-primary
+      [:div.sm:text-center.text-sm.leading-snug.w-full.px-3.pb-3.text-white.opacity-75
+       (recaptcha-disclosure {:link-class "underline"})]])))
+
 (defn post-page [{:keys [site post account base/path] :as opts}]
   (let [width (if ((:tags post) "video")
                 "max-w-screen-lg"
@@ -189,7 +223,7 @@
     [:div.sm:text-center.text-sm.leading-snug.w-full.px-3.pb-3.text-white.opacity-75
      (recaptcha-disclosure {:link-class "underline"})]]))
 
-(defn landing-page [{:keys [posts site] lst :list :as opts}]
+(defn landing-page [{:keys [events posts site] lst :list :as opts}]
   (base-html
    (assoc opts :base/title (:title lst))
    (navbar opts)
@@ -197,6 +231,28 @@
    [:div.bg-tertiary.h-full.flex-grow.flex.flex-col
     [:div.h-5]
     [:div.max-w-screen-md.mx-auto.px-3.w-full
+     (for [event (->> events
+                      (sort-by #(not ((:tags %) "featured")))
+                      (remove #((:tags %) "unlisted"))
+                      (take 5))]
+       (let [start-time (some->> event :dt-start (format-date "K:mm a") str/lower-case)
+             start-month-day (some->> event :dt-start (format-date "MMM d"))
+             start-weekday (some->> event :dt-start (format-date "EEEE"))
+             end-time (some->> event :dt-end (format-date "K:mm a") str/lower-case (format " to %s"))
+
+             location (some->> event :location (format "%s"))]
+         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
+          {:href (str "/e/" (:slug event) "/")
+           :class "hover:bg-white/50"}
+          [:div.ml-1.pb-2.text-lg.text-green-700.font-serif.font-bold (:title event)]
+          [:div.flex.text-left
+           [:div.border.rounded-md.w-24.text-sm.text-green-700.text-center
+            {:class "border-green-700/25 bg-green-700/5"}
+            [:span.font-bold start-month-day] [:br] start-weekday]
+           [:div.pl-3.flex-grow.text-sm.text-green-700 location [:br] start-time end-time]]
+          #_[:div.text-sm.text-green-700 (:description event)]
+          [:div.flex [:div.flex-grow]
+           [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at events))]]]))
      (for [post (->> posts
                      (sort-by #(not ((:tags %) "featured")))
                      (remove #((:tags %) "unlisted"))
@@ -208,7 +264,7 @@
         [:div.text-sm.text-green-700 (:description post)]
         [:div.flex [:div.flex-grow]
          [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at post))]]])]
-    [:div.flex-grow]
+    [:div.flex-grow] 
     [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
      (recaptcha-disclosure {:link-class "underline"})]
     [:div.h-3]]))
@@ -247,6 +303,7 @@
   (redirects! opts)
   (netlify-fn-config! opts)
   (pages! opts render-page pages)
+  (events! opts event-page)
   (posts! opts post-page)
   (cards! opts)
   (atom-feed! opts)
