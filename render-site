@@ -234,6 +234,7 @@
      (for [event (->> events
                       (sort-by #(not ((:tags %) "featured")))
                       (remove #((:tags %) "unlisted"))
+                      (sort-by :dt-start)
                       (take 5))]
        (let [start-time (some->> event :dt-start (format-date "K:mm a") str/lower-case)
              start-month-day (some->> event :dt-start (format-date "MMM d"))
@@ -244,13 +245,14 @@
          [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
           {:href (str "/e/" (:slug event) "/")
            :class "hover:bg-white/50"}
-          [:div.ml-1.pb-2.text-lg.text-green-700.font-serif.font-bold (:title event)]
+          [:div.ml-1.pb-2.text-lg.text-green-700.font-serif.font-bold.leading-tight (:title event)]
           [:div.flex.text-left
-           [:div.border.rounded-md.w-24.text-sm.text-green-700.text-center
+           [:div.border.rounded-md.w-24.shrink-0.text-sm.text-green-700.text-center
             {:class "border-green-700/25 bg-green-700/5"}
             [:span.font-bold start-month-day] [:br] start-weekday]
            [:div.pl-3.flex-grow.text-sm.text-green-700 location [:br] start-time end-time]]
-          #_[:div.text-sm.text-green-700 (:description event)]
+          (when (not-empty (:description event))
+            [:div.ml-1.pt-2.text-sm.text-green-700 (:description event)])
           [:div.flex [:div.flex-grow]
            [:div.text-right-align.mt-1.text-sm.text-gray-400 (format-date "d MMM yyyy" (:published-at events))]]]))
      (for [post (->> posts
