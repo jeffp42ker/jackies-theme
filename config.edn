@@ -42,16 +42,16 @@
           :com.platypub.post/canonical      {:label "Canonical URL"}
           :com.platypub.post/html           {:type :html}
           :com.platypub.page/path           {:label "Path"}
-          :nyc.jeffparker.jackies-theme.event/slug {:label "Slug"
-                                                    :default [:slugify :com.platypub.post/title]}
+          :nyc.jeffparker.jackies-theme.event/slug     {:label "Slug"
+                                                        :default [:slugify :com.platypub.post/title]}
           :nyc.jeffparker.jackies-theme.event/event-id {:label "Event id"}
-          :nyc.jeffparker.jackies-theme.event/source {:label "Event source"}
+          :nyc.jeffparker.jackies-theme.event/source   {:label "Event source"}
           :nyc.jeffparker.jackies-theme.event/location {:label "Location"}
-          :nyc.jeffparker.jackies-theme.event/dt-start {:label "Start datetime"
-                                                       :type :instant}
-          :nyc.jeffparker.jackies-theme.event/dt-end {:label "End datetime"
-                                                     :type :instant}
-          :nyc.jeffparker.jackies-theme.event/status {:label "Status"}}
+          :nyc.jeffparker.jackies-theme.event/dt-start {:label "Start datetime" 
+                                                        :type :instant}
+          :nyc.jeffparker.jackies-theme.event/dt-end   {:label "End datetime"
+                                                        :type :instant}
+          :nyc.jeffparker.jackies-theme.event/status   {:label "Status"}}
  :site-fields [:com.platypub.site/description
                :com.platypub.site/image
                :com.platypub.site/redirects
