@@ -90,7 +90,7 @@
       [:link {:rel "stylesheet" :href "/css/main.css"}]
       [:link {:rel "preconnect" :href "https://fonts.googleapis.com"}]
       [:link {:rel "preconnect" :href "https://fonts.gstatic.com" :crossorigin :true}]
-      [:link {:rel "stylesheet" :href "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&family=Domine:wght@400;500;600;700&display=swap"}]
+      [:link {:rel "stylesheet" :href "https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;700&family=Domine:wght@400;500;600;700&display=swap"}]
       [:script {:src "https://unpkg.com/hyperscript.org@0.93"}]
       [:script {:src "https://www.google.com/recaptcha/api.js"
                 :async "async"
