@@ -1,4 +1,6 @@
-{:fields {:com.platypub.site/description    {:label "Description"}
+{:render-site ["bb" "run" "render-site"]
+ :render-email ["bb" "run" "render-email"]
+ :fields {:com.platypub.site/description    {:label "Description"}
           :com.platypub.site/image          {:label "Image"
                                              :type :image}
           :com.platypub.site/redirects      {:label "Redirects"

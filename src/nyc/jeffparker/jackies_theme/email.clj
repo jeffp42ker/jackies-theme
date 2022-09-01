@@ -1,6 +1,12 @@
-#!/usr/bin/env bb
-;; vim: ft=clojure
-(load-file "common.bb")
+(ns nyc.jeffparker.jackies-theme.email
+  (:require [babashka.fs :as fs]
+            [clojure.string :as str]
+            [clojure.java.io :as io]
+            [clojure.java.shell :as shell]
+            [clojure.edn :as edn]
+            [com.platypub.themes.common :as common]
+            [hiccup2.core :as hiccup]
+            [hiccup.util :refer [raw-string]]))
 
 (defn centered [& body]
   [:table
@@ -32,8 +38,8 @@
     :cellspacing "0"}
    [:tr
     [:td [:a {:href (:author-url site)}
-          [:img {:src (cached-img-url {:url (:author-image site)
-                                       :w 100 :h 100})
+          [:img {:src (common/cached-img-url {:url (:author-image site)
+                                              :w 100 :h 100})
                  :width "50px"
                  :height "50px"
                  :style {:border-radius "50%"
@@ -43,10 +49,10 @@
     [:td {:style {:font-size "90%"}}
      [:div (:author-name site)]
      [:div
-      (format-date "d MMM yyyy" (:published-at post))
-      (when (:discourse-url site)
+      (common/format-date "d MMM yyyy" (:published-at post))
+      (when (not-empty (:discourse-url site))
         (list
-         interpunct
+         common/interpunct
          [:a {:href (comments-url opts)} "comments"]))]]]])
 
 (defn space [px]
@@ -66,11 +72,11 @@
                   :text-align "center"}}
       label]]]])
 
-(defn render [{:keys [post site] lst :list :as opts}] 
+(defn render [{:keys [post site] lst :list :as opts}]
   [:html
    [:head
     [:title (:title post)]
-    [:style (raw-string (slurp "email.css"))]
+    [:style (raw-string (slurp (io/resource "com/platypub/themes/default/email.css")))]
     [:meta {:http-equiv "Content-Type" :content "text/html; charset=utf-8"}]
     [:meta {:name "viewport" :content "width=device-width,initial-scale=1"}]]
    [:body
@@ -90,7 +96,7 @@
      (space 10)
      [:div.post-content (raw-string (:html post))]
      (space 15)
-     (when (:discourse-url site)
+     (when (not-empty (:discourse-url site))
        (list
         (button {:bg-color (:primary-color site)
                  :href (comments-url opts)
@@ -102,8 +108,7 @@
       (:mailing-address lst) ". "
       [:a {:href "%mailing_list_unsubscribe_url%"} "Unsubscribe."]])]])
 
-(defn main [{:keys [post] :as opts}]
-  {:subject (:title post)
-   :html (str (hiccup/html (render opts)))})
-
-(main (derive-opts *input*))
+(defn -main []
+  (let [opts (common/derive-opts (edn/read-string (slurp *in*)))]
+    (prn {:subject (get-in opts [:post :title])
+          :html (str (hiccup/html (render opts)))})))

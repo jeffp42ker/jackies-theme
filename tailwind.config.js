@@ -5,9 +5,9 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        'primary': '{{primary-color}}',
-        'accent': '{{accent-color}}',
-        'tertiary': '{{tertiary-color}}',
+        'primary': '#44403c',
+        'accent': '#009b50',
+        'tertiary': '#E5E5E5',
       },
     },
     fontFamily: {
