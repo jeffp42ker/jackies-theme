@@ -1,8 +1,6 @@
 (ns nyc.jeffparker.jackies-theme.config
   (:require [com.platypub.themes.default.config :refer [config]]))
 
-
-
 (def site-fields
   [:com.platypub.site/description
    :com.platypub.site/image
@@ -24,7 +22,7 @@
                                                  :type :instant}
    :nyc.jeffparker.jackies-theme.event/status   {:label "Status"}})
 
-(def events 
+(def events
   {:key :events
    :label "Event"
    :slug "events"
@@ -56,8 +54,8 @@
                              :com.platypub.post/tags]}]})
 
 (defn -main []
-  (let [items (->> config :items (conj events))
-        fields (->> config :fields (merge event-fields))]
+  (let [items (-> config :items (conj events))
+        fields (-> config :fields (merge event-fields))]
     (-> config
         (assoc :site-fields site-fields
                :fields fields
