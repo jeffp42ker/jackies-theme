@@ -1,7 +1,10 @@
+.calva
 .clj-kondo/.cache
+.cpcache
 .lsp
 .portal
 .netlify
+.nrepl-port
 assets
 input.edn
 netlify
