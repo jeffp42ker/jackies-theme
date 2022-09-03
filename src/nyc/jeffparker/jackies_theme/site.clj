@@ -340,7 +340,7 @@
                       (remove #((:tags %) "unlisted"))
                       (sort-by :dt-start #(compare %2 %1))
                       (take 5))]
-       (let [start-time (some->> event :dt-start (common/format-date "K:mm a") str/lower-case)
+       (let [start-time (some->> event :dt-start (common/format-date "h:mm a") str/lower-case)
              start-month-day (some->> event :dt-start (common/format-date "MMM. d"))
              start-weekday (some->> event :dt-start (common/format-date "EEEE"))
              end-time (some->> event :dt-end (common/format-date "K:mm a") str/lower-case (format " to %s"))
