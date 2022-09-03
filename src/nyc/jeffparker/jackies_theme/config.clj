@@ -54,10 +54,10 @@
                              :com.platypub.post/tags]}]})
 
 (defn -main []
-  (let [items (-> config :items (conj events))
-        fields (-> config :fields (merge event-fields))]
-    (-> config
-        (assoc :site-fields site-fields
-               :fields fields
-               :items items)
-        prn)))
+  (let [items (->> config :items (cons events) (into []))
+        fields (-> config :fields (merge event-fields))
+        config (-> config
+                   (assoc :site-fields site-fields
+                          :fields fields
+                          :items items))]
+    (prn config)))
