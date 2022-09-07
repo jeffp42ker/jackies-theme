@@ -319,6 +319,32 @@
    [:div.h-6]
    [:div.post-content (raw-string (:html about))]])
 
+(defn event-item [event]
+  (let [start-time (some->> event :dt-start (common/format-date "h:mm a") str/lower-case)
+        start-month-day (some->> event :dt-start (common/format-date "MMM. d"))
+        start-weekday (some->> event :dt-start (common/format-date "EEEE"))
+        end-time (some->> event :dt-end (common/format-date "K:mm a") str/lower-case (format " to %s"))
+        _ (prn (-> event :dt-end type))
+        location (some->> event :location (format "%s"))]
+    [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
+     {:href (str "/e/" (:slug event) "/")
+      :class "hover:bg-white/50"}
+     [:div.ml-1.text-lg.text-green-700.font-serif.font-bold.leading-tight (:title event)]
+     [:div.flex.text-left
+      [:div.py-2.flex-col [:div.pt-1.pb-2.border.rounded-none.shadow-lg.w-24.shrink-0.text-sm.text-green-700.text-center
+                           {:class "border-green-700/50"}
+                           [:span.font-medium start-weekday] [:br] start-month-day] [:div.flex-grow]]
+      [:div.pl-3.py-1.flex-grow.text-sm.text-green-700 [:div.font-medium location] [:div start-time end-time]]]
+     (when (not-empty (:description event))
+       [:div.ml-1.pt-2.text-sm.text-green-700 (:description event)])]))
+
+(defn post-item [post]
+  [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
+   {:href (str "/p/" (:slug post) "/")
+    :class "hover:bg-white/50"}
+   [:div.text-lg.text-green-700.font-serif.font-bold (:title post)]
+   [:div.text-sm.text-green-700 (:description post)]])
+
 (defn landing-page [{:keys [events posts site about] lst :list :as opts}]
   (base-html
    (assoc opts :base/title (:title lst))
@@ -336,40 +362,24 @@
     [:div.h-5]
     [:div.max-w-screen-md.mx-auto.px-3.w-full
      (for [event (->> events
-                      (sort-by #(not ((:tags %) "featured")))
+                      ;; yet to come
+                      (filter #(> (inst-ms (:dt-end %)) (inst-ms (java.util.Date.))))
+                      (sort-by #(not ((:tags %) "featured"))) 
                       (remove #((:tags %) "unlisted"))
+                      (sort-by :dt-start #(compare %1 %2)))]
+       (event-item event))
+     (for [event (->> events
+                      ;; in the past
+                      (filter #(< (inst-ms (:dt-end %)) (inst-ms (java.util.Date.))))
                       (sort-by :dt-start #(compare %2 %1))
+                      (remove #((:tags %) "unlisted"))
                       (take 5))]
-       (let [start-time (some->> event :dt-start (common/format-date "h:mm a") str/lower-case)
-             start-month-day (some->> event :dt-start (common/format-date "MMM. d"))
-             start-weekday (some->> event :dt-start (common/format-date "EEEE"))
-             end-time (some->> event :dt-end (common/format-date "K:mm a") str/lower-case (format " to %s"))
-
-             location (some->> event :location (format "%s"))]
-         [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
-          {:href (str "/e/" (:slug event) "/")
-           :class "hover:bg-white/50"}
-          [:div.ml-1.text-lg.text-green-700.font-serif.font-bold.leading-tight (:title event)]
-          [:div.flex.text-left
-           [:div.py-2.flex-col [:div.pt-1.pb-2.border.rounded-none.shadow-lg.w-24.shrink-0.text-sm.text-green-700.text-center
-                                {:class "border-green-700/50"}
-                                [:span.font-medium start-weekday] [:br] start-month-day] [:div.flex-grow]]
-           [:div.pl-3.py-1.flex-grow.text-sm.text-green-700 [:div.font-medium location] [:div start-time end-time]]]
-          (when (not-empty (:description event))
-            [:div.ml-1.pt-2.text-sm.text-green-700 (:description event)])
-          [:div.flex [:div.flex-grow]
-           [:div.text-right-align.mt-1.text-sm.text-gray-400 (common/format-date "d MMM yyyy" (:published-at events))]]]))
+       (event-item event))
      (for [post (->> posts
                      (sort-by #(not ((:tags %) "featured")))
                      (remove #((:tags %) "unlisted"))
                      (take 5))]
-       [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
-        {:href (str "/p/" (:slug post) "/")
-         :class "hover:bg-white/50"}
-        [:div.text-lg.text-green-700.font-serif.font-bold (:title post)]
-        [:div.text-sm.text-green-700 (:description post)]
-        [:div.flex [:div.flex-grow]
-         [:div.text-right-align.mt-1.text-sm.text-gray-400 (common/format-date "d MMM yyyy" (:published-at post))]]])]
+       (post-item post))]
     [:div.flex-grow]
     [:div.sm:text-center.text-sm.leading-snug.opacity-75.w-full.px-3
      (common/recaptcha-disclosure {:link-class "underline"})]
