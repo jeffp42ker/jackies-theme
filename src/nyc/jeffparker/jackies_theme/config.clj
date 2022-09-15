@@ -41,7 +41,7 @@
             :nyc.jeffparker.jackies-theme.event/event-id
             :nyc.jeffparker.jackies-theme.event/status
             :com.platypub.post/html]
-   :sendable false
+   :sendable true
    :render/label :com.platypub.post/title
    :render/sections [{:label "Drafts"
                       :match [[:com.platypub.post/draft true]]
