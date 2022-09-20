@@ -248,9 +248,9 @@
   [:a.block.mb-5.bg-white.rounded.p-3.cursor-pointer.w-full
    {:href (str "/p/" (:slug post) "/")
     :class "hover:bg-white/50"}
-   [:div.text-sm.text-gray-800 (common/format-date "d MMM yyyy" (:published-at post))]
-   [:div.text-xl.font-bold (:title post)]
-   [:div (:description post)]])
+   [:div.text-lg.text-green-700.font-serif.font-bold (:title post)]
+   [:div.text-sm.text-green-700 (:description post)]
+   [:div.pt-1.text-sm.text-gray-400 (common/format-date "d MMM yyyy" (:published-at post))]])
 
 (defn archive-page [{:keys [posts site] lst :list :as opts}]
   (base-html
