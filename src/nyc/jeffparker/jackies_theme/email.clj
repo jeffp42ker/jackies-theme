@@ -47,8 +47,8 @@
                          :height "50px"
                          :margin-right "10px"}}]]]
     [:td {:style {:font-size "90%"}}
-     [:div (:author-name site)]
-     [:div
+     [:div {:style {:line-height "120%"}} (:author-name site)]
+     [:div {:style {:line-height "120%"}}
       (common/format-date "d MMM yyyy" (:published-at post))
       (when (not-empty (:discourse-url site))
         (list
