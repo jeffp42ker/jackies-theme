@@ -1,5 +1,9 @@
 # Jackies theme
-A [Platypub](https://github.com/jacobobryant/platypub/tree/master/themes/default) theme, derived from the [default theme](https://github.com/jacobobryant/platypub/tree/master/themes/default) in support of building a community website around a local park. It's at an early stage, like Platypub itself. Significant breaking changes may be expected. Platypub default theme instructions: 
+A [Platypub](https://github.com/jacobobryant/platypub/tree/master/themes/default) theme, derived from the publishing platform's [default theme](https://github.com/jacobobryant/platypub/tree/master/themes/default) in support of building a community website around a local park. It's at an early stage, like Platypub itself. Significant breaking changes should be expected as we keep pace with changes to the default theme.
+
+Configuration for `Event` items is an enhancement implemented in Jackies theme and not included in the default theme.
+
+Platypub default theme instructions: 
 
 Must have `bb` on path.
 
