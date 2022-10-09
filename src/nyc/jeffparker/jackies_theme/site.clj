@@ -182,10 +182,11 @@
       [:h1.font-serif.font-bold.leading-tight.text-green-700
        {:style {:font-size "1.5rem"}}
        (:title event)]
-      [:div.h-3]
-      [:h2.font-sans.leading-tight.text-green-700
-       {:style {:font-size "1.0rem"}}
-       (:description event)]
+      (when (not-empty (:description event)) 
+        [:div.h-3]
+        [:h2.font-sans.leading-tight.text-green-700
+         {:style {:font-size "1.0rem"}}
+         (:description event)])
       [:div.h-3]
       [:div.post-content (raw-string (:html event))]
       [:div.h-5]
