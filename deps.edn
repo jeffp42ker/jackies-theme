@@ -1,4 +1,4 @@
 {:paths ["src"]
- :deps {com.platypub.themes/default {:git/url "https://github.com/jacobobryant/platypub"
-                                     :git/sha "c8871f9ea1ac3b37fbbc99de5440fc937d84369c"
+ :deps {com.platypub.themes/default {:git/url "https://github.com/jeffp42ker/platypub"
+                                     :git/sha "092aa3db158a88076b5650b2273cea7eb75bfff5"
                                      :deps/root "themes/default"}}}
